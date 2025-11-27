@@ -68,29 +68,30 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-3xl font-bold">Checkout</h1>
+    <div className="container mx-auto px-4 py-4 sm:py-6 md:py-8">
+      <h1 className="mb-4 sm:mb-6 md:mb-8 text-2xl sm:text-3xl font-bold">Checkout</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 md:gap-8 lg:grid-cols-3">
           {/* Checkout Form */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Contact Information */}
             <Card>
-              <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl">Contact Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0">
                 <div>
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-sm">Email</Label>
                   <Input
                     id="email"
                     type="email"
+                    className="h-9 sm:h-10 mt-1.5"
                     {...register('email')}
                     placeholder="you@example.com"
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-destructive">
+                    <p className="mt-1 text-xs sm:text-sm text-destructive">
                       {errors.email.message}
                     </p>
                   )}
@@ -100,73 +101,73 @@ export default function CheckoutPage() {
 
             {/* Shipping Address */}
             <Card>
-              <CardHeader>
-                <CardTitle>Shipping Address</CardTitle>
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl">Shipping Address</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
+              <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0">
+                <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                   <div>
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" {...register('firstName')} />
+                    <Label htmlFor="firstName" className="text-sm">First Name</Label>
+                    <Input id="firstName" className="h-9 sm:h-10 mt-1.5" {...register('firstName')} />
                     {errors.firstName && (
-                      <p className="mt-1 text-sm text-destructive">
+                      <p className="mt-1 text-xs sm:text-sm text-destructive">
                         {errors.firstName.message}
                       </p>
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" {...register('lastName')} />
+                    <Label htmlFor="lastName" className="text-sm">Last Name</Label>
+                    <Input id="lastName" className="h-9 sm:h-10 mt-1.5" {...register('lastName')} />
                     {errors.lastName && (
-                      <p className="mt-1 text-sm text-destructive">
+                      <p className="mt-1 text-xs sm:text-sm text-destructive">
                         {errors.lastName.message}
                       </p>
                     )}
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="address">Address</Label>
-                  <Input id="address" {...register('address')} />
+                  <Label htmlFor="address" className="text-sm">Address</Label>
+                  <Input id="address" className="h-9 sm:h-10 mt-1.5" {...register('address')} />
                   {errors.address && (
-                    <p className="mt-1 text-sm text-destructive">
+                    <p className="mt-1 text-xs sm:text-sm text-destructive">
                       {errors.address.message}
                     </p>
                   )}
                 </div>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div>
-                    <Label htmlFor="city">City</Label>
-                    <Input id="city" {...register('city')} />
+                <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3">
+                  <div className="col-span-2 sm:col-span-1">
+                    <Label htmlFor="city" className="text-sm">City</Label>
+                    <Input id="city" className="h-9 sm:h-10 mt-1.5" {...register('city')} />
                     {errors.city && (
-                      <p className="mt-1 text-sm text-destructive">
+                      <p className="mt-1 text-xs sm:text-sm text-destructive">
                         {errors.city.message}
                       </p>
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="state">State</Label>
-                    <Input id="state" {...register('state')} />
+                    <Label htmlFor="state" className="text-sm">State</Label>
+                    <Input id="state" className="h-9 sm:h-10 mt-1.5" {...register('state')} />
                     {errors.state && (
-                      <p className="mt-1 text-sm text-destructive">
+                      <p className="mt-1 text-xs sm:text-sm text-destructive">
                         {errors.state.message}
                       </p>
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="zipCode">ZIP Code</Label>
-                    <Input id="zipCode" {...register('zipCode')} />
+                    <Label htmlFor="zipCode" className="text-sm">ZIP Code</Label>
+                    <Input id="zipCode" className="h-9 sm:h-10 mt-1.5" {...register('zipCode')} />
                     {errors.zipCode && (
-                      <p className="mt-1 text-sm text-destructive">
+                      <p className="mt-1 text-xs sm:text-sm text-destructive">
                         {errors.zipCode.message}
                       </p>
                     )}
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" type="tel" {...register('phone')} />
+                  <Label htmlFor="phone" className="text-sm">Phone</Label>
+                  <Input id="phone" type="tel" className="h-9 sm:h-10 mt-1.5" {...register('phone')} />
                   {errors.phone && (
-                    <p className="mt-1 text-sm text-destructive">
+                    <p className="mt-1 text-xs sm:text-sm text-destructive">
                       {errors.phone.message}
                     </p>
                   )}
@@ -176,46 +177,49 @@ export default function CheckoutPage() {
 
             {/* Payment Information */}
             <Card>
-              <CardHeader>
-                <CardTitle>Payment Information</CardTitle>
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl">Payment Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0">
                 <div>
-                  <Label htmlFor="cardNumber">Card Number</Label>
+                  <Label htmlFor="cardNumber" className="text-sm">Card Number</Label>
                   <Input
                     id="cardNumber"
+                    className="h-9 sm:h-10 mt-1.5"
                     {...register('cardNumber')}
                     placeholder="1234 5678 9012 3456"
                   />
                   {errors.cardNumber && (
-                    <p className="mt-1 text-sm text-destructive">
+                    <p className="mt-1 text-xs sm:text-sm text-destructive">
                       {errors.cardNumber.message}
                     </p>
                   )}
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                   <div>
-                    <Label htmlFor="cardExpiry">Expiry Date</Label>
+                    <Label htmlFor="cardExpiry" className="text-sm">Expiry Date</Label>
                     <Input
                       id="cardExpiry"
+                      className="h-9 sm:h-10 mt-1.5"
                       {...register('cardExpiry')}
                       placeholder="MM/YY"
                     />
                     {errors.cardExpiry && (
-                      <p className="mt-1 text-sm text-destructive">
+                      <p className="mt-1 text-xs sm:text-sm text-destructive">
                         {errors.cardExpiry.message}
                       </p>
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="cardCVC">CVC</Label>
+                    <Label htmlFor="cardCVC" className="text-sm">CVC</Label>
                     <Input
                       id="cardCVC"
+                      className="h-9 sm:h-10 mt-1.5"
                       {...register('cardCVC')}
                       placeholder="123"
                     />
                     {errors.cardCVC && (
-                      <p className="mt-1 text-sm text-destructive">
+                      <p className="mt-1 text-xs sm:text-sm text-destructive">
                         {errors.cardCVC.message}
                       </p>
                     )}
@@ -227,25 +231,25 @@ export default function CheckoutPage() {
 
           {/* Order Summary */}
           <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+            <Card className="sticky top-20">
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl">Order Summary</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
+              <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0">
+                <div className="space-y-1.5 sm:space-y-2">
                   {items.map((item) => (
-                    <div key={item.id} className="flex justify-between text-sm">
-                      <span>
+                    <div key={item.id} className="flex justify-between text-xs sm:text-sm gap-2">
+                      <span className="line-clamp-1">
                         {item.title} x{item.qty}
                       </span>
-                      <span>{formatPrice(item.price * item.qty)}</span>
+                      <span className="font-medium whitespace-nowrap">{formatPrice(item.price * item.qty)}</span>
                     </div>
                   ))}
                 </div>
 
                 <Separator />
 
-                <div className="space-y-2 text-sm">
+                <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Subtotal</span>
                     <span>{formatPrice(subtotal())}</span>
@@ -262,21 +266,21 @@ export default function CheckoutPage() {
 
                 <Separator />
 
-                <div className="flex justify-between text-lg font-bold">
+                <div className="flex justify-between text-base sm:text-lg font-bold">
                   <span>Total</span>
                   <span>{formatPrice(total)}</span>
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="w-full h-10 sm:h-11"
                   size="lg"
                   disabled={isProcessing}
                 >
                   {isProcessing ? 'Processing...' : 'Place Order'}
                 </Button>
 
-                <p className="text-center text-xs text-muted-foreground">
+                <p className="text-center text-[10px] sm:text-xs text-muted-foreground leading-tight">
                   By placing your order, you agree to our terms and conditions
                 </p>
               </CardContent>

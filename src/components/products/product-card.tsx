@@ -65,37 +65,37 @@ export function ProductCard({ product }: ProductCardProps) {
               alt={product.title}
               fill
               className="object-cover transition-transform group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
             />
             {/* Badges */}
-            <div className="absolute left-2 top-2 flex flex-col gap-1">
-              {product.isNew && <Badge variant="default">NEW</Badge>}
+            <div className="absolute left-1.5 sm:left-2 top-1.5 sm:top-2 flex flex-col gap-1">
+              {product.isNew && <Badge variant="default" className="text-[10px] sm:text-xs px-1.5 sm:px-2">NEW</Badge>}
               {hasDiscount && (
-                <Badge variant="destructive">-{discountPercent}%</Badge>
+                <Badge variant="destructive" className="text-[10px] sm:text-xs px-1.5 sm:px-2">-{discountPercent}%</Badge>
               )}
               {product.stock === 0 && (
-                <Badge variant="secondary">Out of Stock</Badge>
+                <Badge variant="secondary" className="text-[10px] sm:text-xs px-1.5 sm:px-2">Out of Stock</Badge>
               )}
             </div>
-            {/* Quick Actions */}
-            <div className="absolute right-2 top-2 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+            {/* Quick Actions - Always visible on mobile, hover on desktop */}
+            <div className="absolute right-1.5 sm:right-2 top-1.5 sm:top-2 flex flex-col gap-1.5 sm:gap-2 opacity-100 sm:opacity-0 transition-opacity sm:group-hover:opacity-100">
               <Button
                 variant="secondary"
                 size="icon"
-                className="h-8 w-8"
+                className="h-7 w-7 sm:h-8 sm:w-8 shadow-md"
                 onClick={handleWishlistToggle}
                 aria-label={
                   isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'
                 }
               >
                 <Heart
-                  className={`h-4 w-4 ${isInWishlist ? 'fill-current text-red-500' : ''}`}
+                  className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isInWishlist ? 'fill-current text-red-500' : ''}`}
                 />
               </Button>
               <Button
                 variant="secondary"
                 size="icon"
-                className="h-8 w-8"
+                className="h-7 w-7 sm:h-8 sm:w-8 shadow-md hidden sm:flex"
                 onClick={(e) => {
                   e.preventDefault();
                   setQuickViewOpen(true);
@@ -107,22 +107,22 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           </div>
 
-          <CardContent className="p-4">
-            <p className="mb-1 text-xs text-muted-foreground">{product.brand}</p>
-            <h3 className="mb-2 line-clamp-2 text-sm font-medium">
+          <CardContent className="p-3 sm:p-4">
+            <p className="mb-0.5 sm:mb-1 text-[10px] sm:text-xs text-muted-foreground truncate">{product.brand}</p>
+            <h3 className="mb-1.5 sm:mb-2 line-clamp-2 text-xs sm:text-sm font-medium leading-tight">
               {product.title}
             </h3>
-            <div className="mb-2 flex items-center gap-1">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="text-sm font-medium">{product.rating}</span>
-              <span className="text-xs text-muted-foreground">
+            <div className="mb-1.5 sm:mb-2 flex items-center gap-1">
+              <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
+              <span className="text-xs sm:text-sm font-medium">{product.rating}</span>
+              <span className="text-[10px] sm:text-xs text-muted-foreground">
                 ({product.reviewCount})
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold">{formatPrice(currentPrice)}</span>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-base sm:text-lg font-bold">{formatPrice(currentPrice)}</span>
               {hasDiscount && (
-                <span className="text-sm text-muted-foreground line-through">
+                <span className="text-xs sm:text-sm text-muted-foreground line-through">
                   {formatPrice(product.price)}
                 </span>
               )}
@@ -130,13 +130,13 @@ export function ProductCard({ product }: ProductCardProps) {
           </CardContent>
         </Link>
 
-        <CardFooter className="p-4 pt-0">
+        <CardFooter className="p-3 sm:p-4 pt-0">
           <Button
-            className="w-full"
+            className="w-full h-9 sm:h-10 text-xs sm:text-sm"
             onClick={handleAddToCart}
             disabled={product.stock === 0}
           >
-            <ShoppingCart className="mr-2 h-4 w-4" />
+            <ShoppingCart className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
             {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
           </Button>
         </CardFooter>
