@@ -91,7 +91,9 @@ export function Header() {
 
         {/* Main Header */}
         <div className="container mx-auto px-3 sm:px-4">
-          <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4">
+          <div className={`flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 ${
+            showBanner ? 'h-14 sm:h-16' : 'h-12 sm:h-14'
+          }`}>
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
               <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
