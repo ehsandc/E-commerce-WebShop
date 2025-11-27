@@ -1,0 +1,357 @@
+[
+  {
+    "id": 1,
+    "slug": "wireless-noise-cancelling-headphones",
+    "title": "Premium Wireless Noise-Cancelling Headphones",
+    "description": "Experience studio-quality sound with advanced active noise cancellation. 30-hour battery life, premium comfort padding, and seamless Bluetooth 5.0 connectivity. Perfect for travel, work, and relaxation.",
+    "price": 299.99,
+    "salePrice": 249.99,
+    "rating": 4.8,
+    "reviewCount": 1247,
+    "brand": "AudioPro",
+    "images": [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800",
+      "https://images.unsplash.com/photo-1545127398-14699f92334b?w=800"
+    ],
+    "category": "electronics",
+    "tags": ["audio", "wireless", "noise-cancelling", "bluetooth"],
+    "stock": 127,
+    "colors": ["Black", "Silver", "Navy Blue"],
+    "isFeatured": true,
+    "isNew": false
+  },
+  {
+    "id": 2,
+    "slug": "smart-watch-fitness-tracker",
+    "title": "Smart Watch with Fitness Tracking",
+    "description": "Track your health and fitness goals with this advanced smartwatch. Heart rate monitoring, sleep tracking, GPS, water-resistant design, and 7-day battery life.",
+    "price": 199.99,
+    "rating": 4.6,
+    "reviewCount": 892,
+    "brand": "FitTech",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800"
+    ],
+    "category": "electronics",
+    "tags": ["smartwatch", "fitness", "health", "wearable"],
+    "stock": 234,
+    "colors": ["Black", "Rose Gold", "Silver"],
+    "isFeatured": true,
+    "isNew": true
+  },
+  {
+    "id": 3,
+    "slug": "4k-ultra-hd-smart-tv-55-inch",
+    "title": "55\" 4K Ultra HD Smart TV",
+    "description": "Immersive 4K viewing experience with HDR10+, Dolby Vision, and built-in streaming apps. Smart TV features with voice control and multiple HDMI ports.",
+    "price": 649.99,
+    "salePrice": 549.99,
+    "rating": 4.7,
+    "reviewCount": 456,
+    "brand": "VisionMax",
+    "images": [
+      "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=800",
+      "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800"
+    ],
+    "category": "electronics",
+    "tags": ["tv", "4k", "smart-tv", "entertainment"],
+    "stock": 45,
+    "isFeatured": true,
+    "isNew": false
+  },
+  {
+    "id": 4,
+    "slug": "wireless-gaming-mouse-rgb",
+    "title": "Wireless Gaming Mouse with RGB Lighting",
+    "description": "Precision gaming mouse with 16000 DPI sensor, customizable RGB lighting, programmable buttons, and ultra-responsive wireless connection. Ergonomic design for extended gaming sessions.",
+    "price": 79.99,
+    "rating": 4.5,
+    "reviewCount": 678,
+    "brand": "GamePro",
+    "images": [
+      "https://images.unsplash.com/photo-1527814050087-3793815479db?w=800",
+      "https://images.unsplash.com/photo-1563297007-0686b7003af7?w=800"
+    ],
+    "category": "electronics",
+    "tags": ["gaming", "mouse", "rgb", "wireless"],
+    "stock": 189,
+    "colors": ["Black", "White"],
+    "isNew": true
+  },
+  {
+    "id": 5,
+    "slug": "portable-bluetooth-speaker",
+    "title": "Portable Waterproof Bluetooth Speaker",
+    "description": "Take your music anywhere with this rugged, waterproof speaker. 360-degree sound, 20-hour battery, and wireless stereo pairing capability.",
+    "price": 89.99,
+    "salePrice": 69.99,
+    "rating": 4.4,
+    "reviewCount": 1034,
+    "brand": "SoundWave",
+    "images": [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=800"
+    ],
+    "category": "electronics",
+    "tags": ["speaker", "bluetooth", "portable", "waterproof"],
+    "stock": 312,
+    "colors": ["Blue", "Black", "Red", "Green"],
+    "isFeatured": false
+  },
+  {
+    "id": 6,
+    "slug": "cotton-graphic-tee-vintage",
+    "title": "Vintage Graphic T-Shirt - 100% Cotton",
+    "description": "Comfortable and stylish vintage-inspired graphic tee. Made from premium 100% cotton fabric with a relaxed fit. Perfect for casual everyday wear.",
+    "price": 29.99,
+    "rating": 4.3,
+    "reviewCount": 523,
+    "brand": "UrbanStyle",
+    "images": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
+      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800"
+    ],
+    "category": "fashion",
+    "tags": ["clothing", "t-shirt", "cotton", "casual"],
+    "stock": 456,
+    "colors": ["White", "Black", "Gray", "Navy"],
+    "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+    "isFeatured": false
+  },
+  {
+    "id": 7,
+    "slug": "slim-fit-denim-jeans",
+    "title": "Classic Slim Fit Denim Jeans",
+    "description": "Modern slim fit jeans crafted from premium stretch denim. Comfortable, versatile, and designed to move with you. Available in multiple washes.",
+    "price": 79.99,
+    "rating": 4.6,
+    "reviewCount": 789,
+    "brand": "DenimCo",
+    "images": [
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800",
+      "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=800"
+    ],
+    "category": "fashion",
+    "tags": ["jeans", "denim", "pants", "casual"],
+    "stock": 234,
+    "colors": ["Dark Blue", "Light Blue", "Black"],
+    "sizes": ["28", "30", "32", "34", "36", "38"],
+    "isFeatured": true
+  },
+  {
+    "id": 8,
+    "slug": "leather-crossbody-bag",
+    "title": "Premium Leather Crossbody Bag",
+    "description": "Elegant and practical crossbody bag made from genuine leather. Multiple compartments, adjustable strap, and timeless design. Perfect for work or weekends.",
+    "price": 149.99,
+    "salePrice": 119.99,
+    "rating": 4.7,
+    "reviewCount": 412,
+    "brand": "LuxeLeather",
+    "images": [
+      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800"
+    ],
+    "category": "fashion",
+    "tags": ["bag", "leather", "crossbody", "accessories"],
+    "stock": 87,
+    "colors": ["Brown", "Black", "Tan"],
+    "isFeatured": true,
+    "isNew": false
+  },
+  {
+    "id": 9,
+    "slug": "running-shoes-athletic",
+    "title": "Performance Running Shoes - Lightweight",
+    "description": "Engineered for speed and comfort. Breathable mesh upper, responsive cushioning, and durable rubber outsole. Ideal for running and training.",
+    "price": 129.99,
+    "rating": 4.5,
+    "reviewCount": 956,
+    "brand": "SportElite",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800"
+    ],
+    "category": "fashion",
+    "tags": ["shoes", "running", "athletic", "sportswear"],
+    "stock": 178,
+    "colors": ["Black/White", "Blue/Orange", "Gray/Red"],
+    "sizes": ["7", "8", "9", "10", "11", "12"],
+    "isFeatured": false,
+    "isNew": true
+  },
+  {
+    "id": 10,
+    "slug": "modern-table-lamp-minimalist",
+    "title": "Modern Minimalist Table Lamp",
+    "description": "Sleek and contemporary table lamp with adjustable brightness. Perfect for reading, working, or ambient lighting. Energy-efficient LED technology.",
+    "price": 59.99,
+    "rating": 4.4,
+    "reviewCount": 267,
+    "brand": "HomeGlow",
+    "images": [
+      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800",
+      "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800"
+    ],
+    "category": "home",
+    "tags": ["lamp", "lighting", "home-decor", "modern"],
+    "stock": 145,
+    "colors": ["White", "Black", "Brass"],
+    "isFeatured": false
+  },
+  {
+    "id": 11,
+    "slug": "ceramic-dinner-plate-set",
+    "title": "Ceramic Dinner Plate Set - 12 Pieces",
+    "description": "Beautiful ceramic dinnerware set including 4 dinner plates, 4 salad plates, and 4 bowls. Microwave and dishwasher safe. Elegant design for everyday use.",
+    "price": 89.99,
+    "salePrice": 69.99,
+    "rating": 4.6,
+    "reviewCount": 534,
+    "brand": "TableArt",
+    "images": [
+      "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800",
+      "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800"
+    ],
+    "category": "home",
+    "tags": ["dinnerware", "ceramic", "kitchen", "dining"],
+    "stock": 92,
+    "colors": ["White", "Blue", "Gray"],
+    "isFeatured": true
+  },
+  {
+    "id": 12,
+    "slug": "memory-foam-throw-pillow",
+    "title": "Memory Foam Throw Pillow Set",
+    "description": "Ultra-soft decorative throw pillows with memory foam filling. Removable and washable covers. Set of 2 pillows perfect for couches, beds, or chairs.",
+    "price": 39.99,
+    "rating": 4.3,
+    "reviewCount": 423,
+    "brand": "CozyHome",
+    "images": [
+      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800",
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800"
+    ],
+    "category": "home",
+    "tags": ["pillow", "home-decor", "comfort", "bedroom"],
+    "stock": 267,
+    "colors": ["Beige", "Gray", "Navy", "White"],
+    "isFeatured": false
+  },
+  {
+    "id": 13,
+    "slug": "essential-oil-diffuser",
+    "title": "Ultrasonic Essential Oil Diffuser",
+    "description": "Create a relaxing atmosphere with this elegant aromatherapy diffuser. 7 LED color options, auto shut-off, and whisper-quiet operation. Includes starter oils.",
+    "price": 34.99,
+    "rating": 4.5,
+    "reviewCount": 1123,
+    "brand": "AromaLife",
+    "images": [
+      "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800",
+      "https://images.unsplash.com/photo-1611688727291-306e4c0d8f39?w=800"
+    ],
+    "category": "home",
+    "tags": ["diffuser", "aromatherapy", "wellness", "home"],
+    "stock": 198,
+    "isFeatured": false,
+    "isNew": true
+  },
+  {
+    "id": 14,
+    "slug": "natural-face-serum-vitamin-c",
+    "title": "Vitamin C Brightening Face Serum",
+    "description": "Powerful antioxidant serum with 20% vitamin C. Brightens skin, reduces dark spots, and promotes collagen production. Natural and cruelty-free formula.",
+    "price": 49.99,
+    "rating": 4.7,
+    "reviewCount": 2341,
+    "brand": "GlowNaturals",
+    "images": [
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800",
+      "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800"
+    ],
+    "category": "beauty",
+    "tags": ["skincare", "serum", "vitamin-c", "natural"],
+    "stock": 312,
+    "isFeatured": true,
+    "isNew": false
+  },
+  {
+    "id": 15,
+    "slug": "organic-shampoo-conditioner-set",
+    "title": "Organic Argan Oil Shampoo & Conditioner",
+    "description": "Sulfate-free hair care set infused with organic argan oil. Nourishes, strengthens, and adds shine. Suitable for all hair types. Eco-friendly packaging.",
+    "price": 39.99,
+    "rating": 4.4,
+    "reviewCount": 876,
+    "brand": "PureHair",
+    "images": [
+      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800",
+      "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800"
+    ],
+    "category": "beauty",
+    "tags": ["haircare", "organic", "shampoo", "conditioner"],
+    "stock": 234,
+    "isFeatured": false
+  },
+  {
+    "id": 16,
+    "slug": "makeup-brush-set-professional",
+    "title": "Professional Makeup Brush Set - 12 Pieces",
+    "description": "Complete makeup brush collection with synthetic bristles. Includes face and eye brushes with ergonomic handles. Comes with premium storage case.",
+    "price": 69.99,
+    "salePrice": 54.99,
+    "rating": 4.6,
+    "reviewCount": 1567,
+    "brand": "BeautyPro",
+    "images": [
+      "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800",
+      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800"
+    ],
+    "category": "beauty",
+    "tags": ["makeup", "brushes", "beauty-tools", "cosmetics"],
+    "stock": 156,
+    "isFeatured": true,
+    "isNew": true
+  },
+  {
+    "id": 17,
+    "slug": "building-blocks-educational-toy",
+    "title": "Educational Building Blocks Set - 200 Pieces",
+    "description": "Colorful building blocks that inspire creativity and learning. Safe, non-toxic materials. Great for developing motor skills and imagination. Ages 3+.",
+    "price": 44.99,
+    "rating": 4.8,
+    "reviewCount": 934,
+    "brand": "KidsCreate",
+    "images": [
+      "https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=800",
+      "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800"
+    ],
+    "category": "toys",
+    "tags": ["toys", "educational", "building-blocks", "kids"],
+    "stock": 287,
+    "isFeatured": false
+  },
+  {
+    "id": 18,
+    "slug": "rc-racing-car-remote-control",
+    "title": "Remote Control Racing Car - High Speed",
+    "description": "Fast and durable RC car with 2.4GHz remote control. Reaches speeds up to 25 mph. Rechargeable battery and all-terrain wheels. Perfect for outdoor fun.",
+    "price": 79.99,
+    "rating": 4.5,
+    "reviewCount": 612,
+    "brand": "SpeedRacers",
+    "images": [
+      "https://images.unsplash.com/photo-1558418294-492f99790bb5?w=800",
+      "https://images.unsplash.com/photo-1558418294-f90e50a4f6e5?w=800"
+    ],
+    "category": "toys",
+    "tags": ["toys", "rc-car", "remote-control", "racing"],
+    "stock": 143,
+    "colors": ["Red", "Blue", "Green"],
+    "isFeatured": false,
+    "isNew": true
+  }
+]
