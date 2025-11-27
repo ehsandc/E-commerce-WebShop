@@ -28,6 +28,8 @@ const categories = [
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [cartOpen, setCartOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -36,11 +38,25 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      const currentScrollY = window.scrollY;
+      
+      setIsScrolled(currentScrollY > 0);
+      
+      // Show banner when scrolling up, hide when scrolling down
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        // Scrolling down
+        setShowBanner(false);
+      } else {
+        // Scrolling up
+        setShowBanner(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const handleSearch = debounce((query: string) => {
     if (query.trim()) {
@@ -61,8 +77,12 @@ export function Header() {
           isScrolled ? 'shadow-sm' : ''
         }`}
       >
-        {/* Top Banner - Hidden on mobile */}
-        <div className="hidden bg-primary py-2 text-center text-xs sm:block sm:text-sm text-primary-foreground">
+        {/* Top Banner - Hidden on mobile, slides in/out on scroll */}
+        <div 
+          className={`hidden bg-primary py-2 text-center text-xs sm:block sm:text-sm text-primary-foreground transition-all duration-300 overflow-hidden ${
+            showBanner ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
           <p>
             Free shipping on orders over $50 | Flash Sale: Up to 40% Off
             Selected Items
