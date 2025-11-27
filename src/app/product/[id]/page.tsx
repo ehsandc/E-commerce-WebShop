@@ -13,9 +13,10 @@ async function getProduct(id: string) {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const data = await getProduct(params.id);
+  const { id } = await params;
+  const data = await getProduct(id);
   if (!data) return { title: 'Product Not Found' };
 
   const { product } = data;
@@ -35,9 +36,10 @@ export async function generateMetadata({
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const data = await getProduct(params.id);
+  const { id } = await params;
+  const data = await getProduct(id);
 
   if (!data) {
     return (

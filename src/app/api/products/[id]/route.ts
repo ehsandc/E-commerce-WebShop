@@ -6,9 +6,10 @@ const products = productsData as Product[];
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = parseInt(params.id);
+  const { id: idString } = await params;
+  const id = parseInt(idString);
   const product = products.find((p) => p.id === id);
 
   if (!product) {

@@ -4,8 +4,10 @@ import type { Metadata } from 'next';
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const { slug } = await params;
+  
   const categoryNames: Record<string, string> = {
     electronics: 'Electronics',
     fashion: 'Fashion',
@@ -14,7 +16,7 @@ export async function generateMetadata({
     toys: 'Toys & Games',
   };
 
-  const name = categoryNames[params.slug] || params.slug;
+  const name = categoryNames[slug] || slug;
 
   return {
     title: `${name} - ShopHub`,
@@ -22,6 +24,11 @@ export async function generateMetadata({
   };
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  return <CategoryPageClient slug={params.slug} />;
+export default async function CategoryPage({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}) {
+  const { slug } = await params;
+  return <CategoryPageClient slug={slug} />;
 }

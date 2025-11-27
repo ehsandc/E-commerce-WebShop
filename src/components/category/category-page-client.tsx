@@ -88,8 +88,6 @@ export function CategoryPageClient({ slug }: CategoryPageClientProps) {
     toys: 'Toys & Games',
   };
 
-  const [showFilters, setShowFilters] = useState(false);
-
   return (
     <div className="container mx-auto px-4 py-4 sm:py-6 md:py-8">
       <div className="mb-4 sm:mb-6 md:mb-8">
