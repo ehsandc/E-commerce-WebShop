@@ -3,21 +3,18 @@ import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/products/product-card';
 import type { Product } from '@/types';
+import productsData from '@/../../data/products.json';
+
+const products = productsData as Product[];
 
 async function getFeaturedProducts() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/products?featured=true&limit=8`,
-    { cache: 'no-store' }
-  );
-  return res.json();
+  // Get featured products (high rated items)
+  return products.filter(p => p.rating >= 4.5).slice(0, 8);
 }
 
 async function getNewProducts() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/products?new=true&limit=4`,
-    { cache: 'no-store' }
-  );
-  return res.json();
+  // Get newest products (marked as new)
+  return products.filter(p => p.isNew).slice(0, 4);
 }
 
 const categories = [

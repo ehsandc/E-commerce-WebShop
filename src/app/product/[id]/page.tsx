@@ -1,13 +1,22 @@
 import { ProductDetailClient } from '@/components/product/product-detail-client';
 import type { Metadata } from 'next';
+import type { Product } from '@/types';
+import productsData from '@/../../data/products.json';
+
+const products = productsData as Product[];
 
 async function getProduct(id: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/products/${id}`,
-    { cache: 'no-store' }
-  );
-  if (!res.ok) return null;
-  return res.json();
+  const productId = parseInt(id);
+  const product = products.find((p) => p.id === productId);
+
+  if (!product) return null;
+
+  // Get related products from the same category
+  const related = products
+    .filter((p) => p.category === product.category && p.id !== product.id)
+    .slice(0, 4);
+
+  return { product, related };
 }
 
 export async function generateMetadata({
