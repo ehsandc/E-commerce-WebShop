@@ -31,7 +31,7 @@ export function CategoryPageClient({ slug }: CategoryPageClientProps) {
   const [filters, setFilters] = useState({
     minPrice: searchParams.get('minPrice') || '',
     maxPrice: searchParams.get('maxPrice') || '',
-    rating: searchParams.get('rating') || '',
+    rating: searchParams.get('rating') || 'all',
     inStock: searchParams.get('inStock') === 'true',
     sort: searchParams.get('sort') || 'popularity',
   });
@@ -43,7 +43,7 @@ export function CategoryPageClient({ slug }: CategoryPageClientProps) {
       params.set('category', slug);
       if (filters.minPrice) params.set('minPrice', filters.minPrice);
       if (filters.maxPrice) params.set('maxPrice', filters.maxPrice);
-      if (filters.rating) params.set('rating', filters.rating);
+      if (filters.rating && filters.rating !== 'all') params.set('rating', filters.rating);
       if (filters.inStock) params.set('inStock', 'true');
       if (filters.sort) params.set('sort', filters.sort);
 
@@ -73,7 +73,7 @@ export function CategoryPageClient({ slug }: CategoryPageClientProps) {
     setFilters({
       minPrice: '',
       maxPrice: '',
-      rating: '',
+      rating: 'all',
       inStock: false,
       sort: 'popularity',
     });
@@ -148,7 +148,7 @@ export function CategoryPageClient({ slug }: CategoryPageClientProps) {
                 <SelectValue placeholder="Any rating" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Any rating</SelectItem>
+                <SelectItem value="all">Any rating</SelectItem>
                 <SelectItem value="4">4+ stars</SelectItem>
                 <SelectItem value="4.5">4.5+ stars</SelectItem>
               </SelectContent>
