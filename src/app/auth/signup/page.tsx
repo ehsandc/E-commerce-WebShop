@@ -8,9 +8,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
+import { useUserStore } from '@/store/user';
 
 export default function SignupPage() {
   const router = useRouter();
+  const signup = useUserStore((state) => state.signup);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,12 +21,13 @@ export default function SignupPage() {
     e.preventDefault();
     
     // Mock signup
+    signup(name, email, password);
     toast({
       title: 'Account created!',
       description: 'Welcome to ShopHub. You can now start shopping.',
     });
 
-    router.push('/');
+    router.push('/account');
   };
 
   return (

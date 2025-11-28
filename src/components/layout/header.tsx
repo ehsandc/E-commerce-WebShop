@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { CartDrawer } from '@/components/cart/cart-drawer';
 import { useCartStore } from '@/store/cart';
+import { useUserStore } from '@/store/user';
 import { useRouter } from 'next/navigation';
 import { debounce } from '@/lib/utils';
 
@@ -34,6 +35,7 @@ export function Header() {
   const [cartOpen, setCartOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const itemCount = useCartStore((state) => state.itemCount());
+  const { user, isAuthenticated } = useUserStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -151,7 +153,7 @@ export function Header() {
                 )}
               </Button>
               <Button variant="ghost" size="icon" className="hidden h-10 w-10 md:flex" asChild>
-                <Link href="/auth/login" aria-label="Account">
+                <Link href={isAuthenticated ? '/account' : '/auth/login'} aria-label="Account">
                   <User className="h-5 w-5" />
                 </Link>
               </Button>
@@ -197,11 +199,11 @@ export function Header() {
                   </Link>
                 ))}
                 <Link
-                  href="/auth/login"
+                  href={isAuthenticated ? '/account' : '/auth/login'}
                   className="text-sm font-medium transition-colors hover:text-primary py-1 active:bg-accent rounded"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Account
+                  {isAuthenticated ? (user?.name || 'Account') : 'Login'}
                 </Link>
               </div>
             </nav>

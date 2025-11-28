@@ -8,9 +8,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
+import { useUserStore } from '@/store/user';
 
 export default function LoginPage() {
   const router = useRouter();
+  const login = useUserStore((state) => state.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,12 +20,13 @@ export default function LoginPage() {
     e.preventDefault();
     
     // Mock login
+    login(email, password);
     toast({
       title: 'Login successful!',
       description: 'Welcome back to ShopHub.',
     });
 
-    router.push('/');
+    router.push('/account');
   };
 
   return (
