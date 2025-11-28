@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Zap } from 'lucide-react';
+import { ArrowRight, Zap, Monitor, Shirt, Home as HomeIcon, Sparkles, Gamepad2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/products/product-card';
 import { RecentlyViewed } from '@/components/products/recently-viewed';
@@ -25,30 +25,35 @@ const categories = [
     slug: 'electronics',
     image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400',
     description: 'Latest tech & gadgets',
+    icon: Monitor,
   },
   {
     name: 'Fashion',
     slug: 'fashion',
     image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400',
     description: 'Trendy clothes & accessories',
+    icon: Shirt,
   },
   {
     name: 'Home',
     slug: 'home',
     image: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=400',
     description: 'Decor & essentials',
+    icon: HomeIcon,
   },
   {
     name: 'Beauty',
     slug: 'beauty',
     image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400',
     description: 'Skincare & cosmetics',
+    icon: Sparkles,
   },
   {
     name: 'Toys',
     slug: 'toys',
     image: 'https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=400',
     description: 'Fun for all ages',
+    icon: Gamepad2,
   },
 ];
 
@@ -114,27 +119,36 @@ export default async function HomePage() {
           </p>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
-          {categories.map((category) => (
-            <Link
-              key={category.slug}
-              href={`/category/${category.slug}`}
-              className="group relative overflow-hidden rounded-lg border bg-card transition-all hover:shadow-lg active:scale-95"
-            >
-              <div className="aspect-square overflow-hidden">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="h-full w-full object-cover transition-transform group-hover:scale-110"
-                />
-              </div>
-              <div className="p-3 sm:p-4">
-                <h3 className="text-sm sm:text-base font-semibold">{category.name}</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-                  {category.description}
-                </p>
-              </div>
-            </Link>
-          ))}
+          {categories.map((category) => {
+            const Icon = category.icon;
+            return (
+              <Link
+                key={category.slug}
+                href={`/category/${category.slug}`}
+                className="group relative overflow-hidden rounded-lg border bg-card transition-all hover:shadow-lg active:scale-95"
+              >
+                <div className="aspect-square overflow-hidden relative">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="h-full w-full object-cover transition-transform group-hover:scale-110"
+                  />
+                  <div className="absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full p-2 shadow-md">
+                    <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                  </div>
+                </div>
+                <div className="p-3 sm:p-4">
+                  <div className="flex items-center gap-2">
+                    <Icon className="h-4 w-4 text-primary flex-shrink-0" />
+                    <h3 className="text-sm sm:text-base font-semibold">{category.name}</h3>
+                  </div>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                    {category.description}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

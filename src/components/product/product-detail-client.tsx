@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star, Heart, ShoppingCart, Minus, Plus, ChevronLeft } from 'lucide-react';
+import { Star, Heart, ShoppingCart, Minus, Plus, ChevronLeft, Share2, Facebook, Twitter, Link as LinkIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -27,6 +27,8 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
   const [selectedColor, setSelectedColor] = useState(product.colors?.[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0]);
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const [showZoom, setShowZoom] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
 
   const addToCart = useCartStore((state) => state.add);
   const { toggle: toggleWishlist, has: inWishlist } = useWishlistStore();
@@ -44,6 +46,13 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPosition({ x, y });
+  };
 
   const handleAddToCart = () => {
     addToCart({
@@ -88,12 +97,20 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Images */}
         <div>
-          <div className="relative aspect-square overflow-hidden rounded-lg border">
+          <div 
+            className="relative aspect-square overflow-hidden rounded-lg border cursor-zoom-in"
+            onMouseEnter={() => setShowZoom(true)}
+            onMouseLeave={() => setShowZoom(false)}
+            onMouseMove={handleMouseMove}
+          >
             <Image
               src={product.images[selectedImage]}
               alt={product.title}
               fill
-              className="object-cover"
+              className={`object-cover transition-transform duration-300 ${showZoom ? 'scale-150' : 'scale-100'}`}
+              style={showZoom ? {
+                transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
+              } : {}}
               priority
             />
             {product.isNew && (
@@ -159,6 +176,58 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
           </div>
 
           <p className="mb-6 text-muted-foreground">{product.description}</p>
+
+          {/* Share & Delivery */}
+          <div className="mb-6 flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Share:</span>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: product.title,
+                      url: window.location.href,
+                    });
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    toast({ title: 'Link copied to clipboard!' });
+                  }
+                }}
+              >
+                <Share2 className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => {
+                  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+                }}
+              >
+                <Facebook className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => {
+                  window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(product.title)}`, '_blank');
+                }}
+              >
+                <Twitter className="h-4 w-4" />
+              </Button>
+            </div>
+            <Separator orientation="vertical" className="h-6 hidden sm:block" />
+            <div className="text-sm">
+              <span className="font-medium text-green-600">✓ Estimated Delivery:</span>{' '}
+              <span className="text-muted-foreground">
+                {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              </span>
+            </div>
+          </div>
 
           <Separator className="my-6" />
 

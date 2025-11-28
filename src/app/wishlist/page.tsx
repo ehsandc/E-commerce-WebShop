@@ -35,15 +35,44 @@ export default function WishlistPage() {
   if (ids.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16">
-        <div className="flex flex-col items-center justify-center text-center">
-          <Heart className="mb-4 h-24 w-24 text-muted-foreground" />
-          <h1 className="mb-2 text-3xl font-bold">Your Wishlist is Empty</h1>
-          <p className="mb-6 text-muted-foreground">
-            Save your favorite products to your wishlist
+        <div className="flex flex-col items-center justify-center text-center max-w-md mx-auto">
+          <div className="relative mb-6">
+            <div className="h-32 w-32 rounded-full bg-primary/10 flex items-center justify-center">
+              <Heart className="h-16 w-16 text-primary" />
+            </div>
+            <div className="absolute -top-2 -right-2 h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+              <span className="text-2xl">💝</span>
+            </div>
+          </div>
+          <h1 className="mb-3 text-2xl sm:text-3xl font-bold">Your Wishlist is Empty</h1>
+          <p className="mb-6 text-sm sm:text-base text-muted-foreground">
+            Save your favorite products for later. Click the heart icon on any product to add it to your wishlist!
           </p>
-          <Button asChild size="lg">
-            <Link href="/">Start Shopping</Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <Button asChild size="lg" className="w-full sm:w-auto">
+              <Link href="/">
+                <ShoppingBag className="mr-2 h-5 w-5" />
+                Start Shopping
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+              <Link href="/category/electronics">Browse Electronics</Link>
+            </Button>
+          </div>
+          <div className="mt-8 grid grid-cols-3 gap-4 w-full text-xs text-muted-foreground">
+            <div className="text-center">
+              <div className="font-semibold text-foreground">♥</div>
+              <div>Save favorites</div>
+            </div>
+            <div className="text-center">
+              <div className="font-semibold text-foreground">🔔</div>
+              <div>Get notified</div>
+            </div>
+            <div className="text-center">
+              <div className="font-semibold text-foreground">🛒</div>
+              <div>Quick access</div>
+            </div>
+          </div>
         </div>
       </div>
     );

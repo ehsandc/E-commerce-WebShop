@@ -142,6 +142,22 @@ export function ProductCard({ product }: ProductCardProps) {
                 <Scale className={`h-4 w-4 ${isInCompare ? 'fill-current text-blue-500' : ''}`} />
               </Button>
             </div>
+            
+            {/* Quick Add to Cart - Desktop Only */}
+            <div className="absolute bottom-3 left-3 right-3 hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity">
+              <Button
+                className="w-full shadow-lg"
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAddToCart(e);
+                }}
+                disabled={product.stock === 0}
+              >
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                Quick Add
+              </Button>
+            </div>
           </div>
 
           <CardContent className="p-3 sm:p-4">
