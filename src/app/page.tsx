@@ -58,13 +58,13 @@ export default async function HomePage() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary/10 via-primary/5 to-background">
-        <div className="container mx-auto px-4 py-12 sm:py-16 md:py-20">
+        <div className="container mx-auto px-4 py-10 sm:py-14 md:py-16">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            <h1 className="mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
               Discover Amazing Products
               <span className="block text-primary mt-2">at Unbeatable Prices</span>
             </h1>
-            <p className="mb-6 sm:mb-8 text-base sm:text-lg text-muted-foreground px-4">
+            <p className="mb-5 sm:mb-6 text-base sm:text-lg text-muted-foreground px-4">
               Shop the latest trends in electronics, fashion, home decor, beauty,
               and more. Free shipping on orders over $50.
             </p>
@@ -84,7 +84,7 @@ export default async function HomePage() {
       </section>
 
       {/* Flash Sale Banner */}
-      <section className="bg-destructive py-2.5 sm:py-3">
+      <section className="bg-destructive py-2 sm:py-2.5">
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-center text-xs sm:text-sm font-medium text-destructive-foreground">
             <div className="flex items-center gap-1.5">
@@ -104,7 +104,7 @@ export default async function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
+      <section className="container mx-auto px-4 py-5 sm:py-6 md:py-8">
         <div className="mb-6 sm:mb-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold">Shop by Category</h2>
           <p className="mt-1.5 sm:mt-2 text-sm sm:text-base text-muted-foreground">
