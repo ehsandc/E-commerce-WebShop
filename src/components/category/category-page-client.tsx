@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { ProductCard } from '@/components/products/product-card';
 import { ProductGridSkeleton } from '@/components/products/product-skeleton';
 import type { Product } from '@/types';
@@ -90,6 +91,12 @@ export function CategoryPageClient({ slug }: CategoryPageClientProps) {
 
   return (
     <div className="container mx-auto px-4 py-4 sm:py-6 md:py-8">
+      <Breadcrumb
+        items={[
+          { label: categoryNames[slug] || slug, href: `/category/${slug}` },
+        ]}
+      />
+      
       <div className="mb-4 sm:mb-6 md:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold">{categoryNames[slug] || slug}</h1>
         <p className="mt-1 sm:mt-2 text-sm sm:text-base text-muted-foreground">

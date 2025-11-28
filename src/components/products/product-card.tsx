@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star, Heart, ShoppingCart, Eye } from 'lucide-react';
+import { Star, Heart, ShoppingCart, Eye, Scale } from 'lucide-react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCartStore } from '@/store/cart';
 import { useWishlistStore } from '@/store/wishlist';
+import { useCompareStore } from '@/store/compare';
 import { toast } from '@/components/ui/use-toast';
 import { formatPrice } from '@/lib/utils';
 import type { Product } from '@/types';
@@ -22,7 +23,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const addToCart = useCartStore((state) => state.add);
   const { toggle: toggleWishlist, has: inWishlist } = useWishlistStore();
+  const { addProduct: addToCompare, hasProduct: inCompare, removeProduct: removeFromCompare } = useCompareStore();
   const isInWishlist = inWishlist(product.id);
+  const isInCompare = inCompare(product.id);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -76,6 +79,16 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.stock === 0 && (
                 <Badge variant="secondary" className="text-[10px] sm:text-xs px-1.5 sm:px-2">Out of Stock</Badge>
               )}
+              {product.stock > 0 && product.stock <= 10 && (
+                <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2 bg-orange-50 dark:bg-orange-950 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800">
+                  Only {product.stock} left!
+                </Badge>
+              )}
+              {product.reviewCount > 500 && (
+                <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800">
+                  🔥 Popular
+                </Badge>
+              )}
             </div>
             {/* Quick Actions - Always visible on mobile, hover on desktop */}
             <div className="absolute right-1.5 sm:right-2 top-1.5 sm:top-2 flex flex-col gap-1.5 sm:gap-2 opacity-100 sm:opacity-0 transition-opacity sm:group-hover:opacity-100">
@@ -103,6 +116,30 @@ export function ProductCard({ product }: ProductCardProps) {
                 aria-label="Quick view"
               >
                 <Eye className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="secondary"
+                size="icon"
+                className="h-7 w-7 sm:h-8 sm:w-8 shadow-md hidden sm:flex"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (isInCompare) {
+                    removeFromCompare(product.id);
+                    toast({
+                      title: 'Removed from compare',
+                      description: `${product.title} has been removed from comparison.`,
+                    });
+                  } else {
+                    addToCompare(product.id);
+                    toast({
+                      title: 'Added to compare',
+                      description: `${product.title} has been added for comparison. (Max 3)`,
+                    });
+                  }
+                }}
+                aria-label={isInCompare ? 'Remove from compare' : 'Add to compare'}
+              >
+                <Scale className={`h-4 w-4 ${isInCompare ? 'fill-current text-blue-500' : ''}`} />
               </Button>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Youtube, Mail } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube, Mail, CreditCard, Lock, Truck, Shield } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -42,6 +42,42 @@ export function Footer() {
   return (
     <footer className="border-t bg-muted/40">
       <div className="container mx-auto px-4 py-8 sm:py-10 md:py-12">
+        {/* Trust Badges */}
+        <div className="mb-8 sm:mb-10">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-2 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-primary/10">
+                <Truck className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+              </div>
+              <h4 className="mb-1 text-xs sm:text-sm font-semibold">Free Shipping</h4>
+              <p className="text-xs text-muted-foreground">Orders over $50</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-2 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-primary/10">
+                <Shield className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+              </div>
+              <h4 className="mb-1 text-xs sm:text-sm font-semibold">Secure Payment</h4>
+              <p className="text-xs text-muted-foreground">100% Protected</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-2 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-primary/10">
+                <Lock className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+              </div>
+              <h4 className="mb-1 text-xs sm:text-sm font-semibold">Money Back</h4>
+              <p className="text-xs text-muted-foreground">30 Day Guarantee</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-2 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-primary/10">
+                <CreditCard className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+              </div>
+              <h4 className="mb-1 text-xs sm:text-sm font-semibold">Easy Payments</h4>
+              <p className="text-xs text-muted-foreground">Multiple Options</p>
+            </div>
+          </div>
+        </div>
+
+        <Separator className="mb-8 sm:mb-10" />
+
         {/* Newsletter Section */}
         <div className="mb-8 sm:mb-10 md:mb-12">
           <div className="flex flex-col items-center text-center">

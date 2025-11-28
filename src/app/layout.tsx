@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
+import { BackToTop } from '@/components/ui/back-to-top';
+import { LiveChatWidget } from '@/components/ui/live-chat-widget';
+import { CompareBar } from '@/components/products/compare-bar';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 
@@ -55,6 +58,9 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <BackToTop />
+          <LiveChatWidget />
+          <CompareBar />
           <Toaster />
         </ThemeProvider>
       </body>

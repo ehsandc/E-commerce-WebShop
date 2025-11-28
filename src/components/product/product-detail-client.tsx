@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Star, Heart, ShoppingCart, Minus, Plus, ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { ProductCard } from '@/components/products/product-card';
 import { useCartStore } from '@/store/cart';
 import { useWishlistStore } from '@/store/wishlist';
+import { useRecentlyViewedStore } from '@/store/recently-viewed';
 import { toast } from '@/components/ui/use-toast';
 import { formatPrice } from '@/lib/utils';
 import type { Product } from '@/types';
@@ -24,9 +26,24 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(product.colors?.[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0]);
+  const [showStickyBar, setShowStickyBar] = useState(false);
 
   const addToCart = useCartStore((state) => state.add);
   const { toggle: toggleWishlist, has: inWishlist } = useWishlistStore();
+  const addRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
+
+  useEffect(() => {
+    addRecentlyViewed(product.id.toString());
+  }, [product.id, addRecentlyViewed]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show sticky bar after scrolling 600px
+      setShowStickyBar(window.scrollY > 600);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleAddToCart = () => {
     addToCart({
@@ -54,16 +71,12 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Breadcrumb */}
-      <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
-        <Link href="/" className="hover:text-foreground">Home</Link>
-        <span>/</span>
-        <Link href={`/category/${product.category}`} className="hover:text-foreground">
-          {product.category}
-        </Link>
-        <span>/</span>
-        <span className="text-foreground">{product.title}</span>
-      </div>
+      <Breadcrumb
+        items={[
+          { label: product.category, href: `/category/${product.category}` },
+          { label: product.title, href: `/product/${product.id}` },
+        ]}
+      />
 
       <Button variant="ghost" size="sm" asChild className="mb-4">
         <Link href={`/category/${product.category}`}>
@@ -267,6 +280,72 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
         </div>
       </div>
 
+      {/* Frequently Bought Together */}
+      {related.length >= 2 && (
+        <div className="mt-12 rounded-lg border bg-muted/20 p-6">
+          <h2 className="mb-4 text-xl font-bold">Frequently Bought Together</h2>
+          <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
+            <div className="flex flex-wrap items-center gap-4">
+              {[product, ...related.slice(0, 2)].map((item, index) => (
+                <div key={item.id} className="flex items-center gap-2">
+                  {index > 0 && <span className="text-2xl text-muted-foreground">+</span>}
+                  <div className="flex flex-col items-center">
+                    <div className="relative h-20 w-20 overflow-hidden rounded border">
+                      <Image
+                        src={item.images[0]}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <p className="mt-2 text-xs text-center line-clamp-2 w-20">{item.title}</p>
+                    <p className="text-sm font-semibold">{formatPrice(item.salePrice || item.price)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col justify-center gap-3">
+              <div className="text-sm">
+                <span className="text-muted-foreground">Bundle Price: </span>
+                <span className="text-2xl font-bold text-primary">
+                  {formatPrice(
+                    (product.salePrice || product.price) +
+                    (related[0]?.salePrice || related[0]?.price || 0) +
+                    (related[1]?.salePrice || related[1]?.price || 0)
+                  )}
+                </span>
+              </div>
+              <Button
+                size="lg"
+                onClick={() => {
+                  const items = [product, related[0], related[1]];
+                  items.forEach((item) => {
+                    if (item) {
+                      addToCart({
+                        id: item.id,
+                        title: item.title,
+                        price: item.salePrice || item.price,
+                        image: item.images[0],
+                      });
+                    }
+                  });
+                  toast({
+                    title: 'Bundle added to cart',
+                    description: 'All 3 products have been added to your cart.',
+                  });
+                }}
+              >
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                Add All to Cart
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                Save by buying together
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Related Products */}
       {related.length > 0 && (
         <div className="mt-16">
@@ -278,6 +357,67 @@ export function ProductDetailClient({ product, related }: ProductDetailClientPro
           </div>
         </div>
       )}
+
+      {/* Sticky Bottom Add to Cart Bar */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-40 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-transform duration-300 ${
+          showStickyBar ? 'translate-y-0' : 'translate-y-full'
+        }`}
+      >
+        <div className="container mx-auto px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="relative h-12 w-12 sm:h-14 sm:w-14 flex-shrink-0 overflow-hidden rounded border">
+                <Image
+                  src={product.images[0]}
+                  alt={product.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="hidden sm:block">
+                <h3 className="font-semibold line-clamp-1">{product.title}</h3>
+                <p className="text-lg font-bold">{formatPrice(currentPrice)}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8 sm:h-10 sm:w-10"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                >
+                  <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
+                </Button>
+                <span className="w-8 sm:w-12 text-center text-sm sm:text-base font-medium">
+                  {quantity}
+                </span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8 sm:h-10 sm:w-10"
+                  onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                  disabled={quantity >= product.stock}
+                >
+                  <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+                </Button>
+              </div>
+              <Button
+                size="lg"
+                onClick={handleAddToCart}
+                disabled={product.stock === 0}
+                className="h-10 sm:h-11"
+              >
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                <span className="hidden sm:inline">Add to Cart</span>
+                <span className="sm:hidden">Add</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

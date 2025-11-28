@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/products/product-card';
+import { RecentlyViewed } from '@/components/products/recently-viewed';
+import { Testimonials } from '@/components/home/testimonials';
 import type { Product } from '@/types';
 import productsData from '@/../../data/products.json';
 
@@ -183,6 +185,12 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials />
+
+      {/* Recently Viewed */}
+      <RecentlyViewed />
 
       {/* Newsletter CTA */}
       <section className="border-y bg-primary py-10 sm:py-12 md:py-16 text-primary-foreground">

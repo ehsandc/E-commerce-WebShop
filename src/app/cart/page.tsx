@@ -12,9 +12,15 @@ import { formatPrice } from '@/lib/utils';
 export default function CartPage() {
   const { items, updateQty, remove, subtotal, clear } = useCartStore();
 
-  const shipping = items.length > 0 ? 10 : 0;
-  const tax = subtotal() * 0.08;
-  const total = subtotal() + shipping + tax;
+  const FREE_SHIPPING_THRESHOLD = 50;
+  const currentSubtotal = subtotal();
+  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - currentSubtotal);
+  const freeShippingProgress = Math.min(100, (currentSubtotal / FREE_SHIPPING_THRESHOLD) * 100);
+  const hasFreeShipping = currentSubtotal >= FREE_SHIPPING_THRESHOLD;
+
+  const shipping = items.length > 0 && !hasFreeShipping ? 10 : 0;
+  const tax = currentSubtotal * 0.08;
+  const total = currentSubtotal + shipping + tax;
 
   if (items.length === 0) {
     return (
@@ -49,6 +55,30 @@ export default function CartPage() {
                 <Button variant="ghost" size="sm" className="text-xs sm:text-sm" onClick={clear}>
                   Clear Cart
                 </Button>
+              </div>
+
+              {/* Free Shipping Progress Bar */}
+              <div className="mb-6 rounded-lg border bg-muted/40 p-4">
+                <div className="mb-2 flex items-center justify-between text-sm">
+                  <span className="font-medium">
+                    {hasFreeShipping ? (
+                      <span className="text-green-600">🎉 You've got free shipping!</span>
+                    ) : (
+                      <span>
+                        Add <span className="font-bold">{formatPrice(remainingForFreeShipping)}</span> more for free shipping
+                      </span>
+                    )}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {formatPrice(currentSubtotal)} / {formatPrice(FREE_SHIPPING_THRESHOLD)}
+                  </span>
+                </div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full bg-primary transition-all duration-300"
+                    style={{ width: `${freeShippingProgress}%` }}
+                  />
+                </div>
               </div>
 
               <div className="space-y-4">
@@ -139,7 +169,13 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between text-sm sm:text-base">
                   <span className="text-muted-foreground">Shipping</span>
-                  <span className="font-medium">{formatPrice(shipping)}</span>
+                  <span className="font-medium">
+                    {hasFreeShipping ? (
+                      <span className="text-green-600">FREE</span>
+                    ) : (
+                      formatPrice(shipping)
+                    )}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm sm:text-base">
                   <span className="text-muted-foreground">Tax (8%)</span>
