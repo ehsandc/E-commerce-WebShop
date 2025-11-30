@@ -1,0 +1,54 @@
+:root {
+  /* Brand palette */
+  --token-brand-primary: 221 89% 55%;
+  --token-brand-secondary: 267 74% 61%;
+  --token-brand-accent: 36 100% 50%;
+  --token-brand-muted: 225 32% 91%;
+
+  /* Surfaces */
+  --token-surface-hero: radial-gradient(
+    circle at top left,
+    hsl(221 100% 94%) 0%,
+    hsl(221 100% 98%) 40%,
+    hsl(0 0% 100%) 100%
+  );
+  --token-surface-hero-dark: radial-gradient(
+    circle at top left,
+    hsl(221 69% 14%) 0%,
+    hsl(221 69% 9%) 40%,
+    hsl(222 55% 5%) 100%
+  );
+  --token-surface-subtle: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.08),
+    rgba(147, 51, 234, 0.08)
+  );
+  --token-surface-glass: rgba(255, 255, 255, 0.72);
+  --token-surface-glass-border: rgba(148, 163, 184, 0.25);
+  --token-surface-glass-dark: rgba(15, 23, 42, 0.65);
+  --token-surface-glass-border-dark: rgba(148, 163, 184, 0.18);
+
+  /* Shadows & radii */
+  --token-shadow-soft: 0 24px 48px -32px rgba(15, 23, 42, 0.35);
+  --token-shadow-ring: 0 0 0 1px rgba(59, 130, 246, 0.15);
+  --token-radius-xl: 24px;
+
+  /* Motion */
+  --token-motion-duration: 450ms;
+  --token-motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --token-motion-stagger: 0.14s;
+}
+
+.dark {
+  --token-surface-hero: var(--token-surface-hero-dark);
+  --token-surface-glass: var(--token-surface-glass-dark);
+  --token-surface-glass-border: var(--token-surface-glass-border-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --token-motion-duration: 10ms;
+    --token-motion-ease: linear;
+    --token-motion-stagger: 0s;
+  }
+}

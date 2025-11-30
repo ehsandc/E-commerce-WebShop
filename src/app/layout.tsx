@@ -7,7 +7,9 @@ import { BackToTop } from '@/components/ui/back-to-top';
 import { LiveChatWidget } from '@/components/ui/live-chat-widget';
 import { CompareBar } from '@/components/products/compare-bar';
 import { Header } from '@/components/layout/header';
+import { MarketingBanner } from '@/components/layout/marketing-banner';
 import { Footer } from '@/components/layout/footer';
+import { AnalyticsProvider } from '@/components/analytics-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -46,7 +48,33 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);} 
+                      gtag('js', new Date());
+                      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', { page_path: window.location.pathname });
+                    `,
+              }}
+            />
+          </>
+        )}
+      </head>
       <body className={inter.className}>
+        <a
+          href="#main-content"
+          className="sr-only shadow focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -54,14 +82,18 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex min-h-screen flex-col">
+            <MarketingBanner />
             <Header />
-            <main className="flex-1">{children}</main>
+            <main id="main-content" role="main" className="flex-1">
+              {children}
+            </main>
             <Footer />
           </div>
           <BackToTop />
           <LiveChatWidget />
           <CompareBar />
           <Toaster />
+          <AnalyticsProvider />
         </ThemeProvider>
       </body>
     </html>

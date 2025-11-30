@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { createSelectors } from '@/store/utils';
 
 interface User {
   id: string;
@@ -30,6 +31,9 @@ interface UserState {
   user: User | null;
   orders: Order[];
   isAuthenticated: boolean;
+}
+
+interface UserActions {
   login: (email: string, password: string) => void;
   signup: (name: string, email: string, password: string) => void;
   logout: () => void;
@@ -37,7 +41,9 @@ interface UserState {
   addOrder: (order: Order) => void;
 }
 
-export const useUserStore = create<UserState>()(
+export type UserStore = UserState & UserActions;
+
+const userStore = create<UserStore>()(
   persist(
     (set) => ({
       user: null,
@@ -49,8 +55,9 @@ export const useUserStore = create<UserState>()(
         const mockUser: User = {
           id: '1',
           name: 'John Doe',
-          email: email,
-          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
+          email,
+          avatar:
+            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
           phone: '+1 (555) 123-4567',
           address: {
             street: '123 Main Street, Apt 4B',
@@ -120,6 +127,14 @@ export const useUserStore = create<UserState>()(
     }),
     {
       name: 'user-storage',
+      version: 1,
     }
   )
 );
+
+export const useUserStore = userStore;
+export const userSelectors = createSelectors(userStore);
+export const selectCurrentUser = (state: UserStore) => state.user;
+export const selectIsAuthenticated = (state: UserStore) =>
+  state.isAuthenticated;
+export const selectUserOrders = (state: UserStore) => state.orders;

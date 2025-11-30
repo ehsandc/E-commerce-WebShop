@@ -1,6 +1,13 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useCartStore } from '../store/cart';
+
+beforeEach(() => {
+  useCartStore.setState({ items: [] });
+  if (typeof window !== 'undefined' && window.localStorage) {
+    window.localStorage.clear();
+  }
+});
 
 describe('Cart Store', () => {
   it('should add item to cart', () => {

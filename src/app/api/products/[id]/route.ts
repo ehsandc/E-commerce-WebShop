@@ -1,25 +1,40 @@
 import { NextResponse } from 'next/server';
-import productsData from '@/../../data/products.json';
-import type { Product } from '@/types';
+import { getProductById, getRelatedProducts } from '@/lib/db/products';
 
-const products = productsData as Product[];
+const responseCacheHeaders = {
+  'Cache-Control':
+    'public, max-age=120, s-maxage=300, stale-while-revalidate=600',
+};
 
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id: idString } = await params;
-  const id = parseInt(idString);
-  const product = products.find((p) => p.id === id);
+  const id = Number(idString);
 
-  if (!product) {
-    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+  if (Number.isNaN(id)) {
+    return NextResponse.json({ error: 'Invalid product id' }, { status: 400 });
   }
 
-  // Get related products from the same category
-  const related = products
-    .filter((p) => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
+  try {
+    const product = await getProductById(id);
 
-  return NextResponse.json({ product, related });
+    if (!product) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+
+    const related = await getRelatedProducts(product, 4);
+
+    return NextResponse.json(
+      { product, related },
+      { headers: responseCacheHeaders }
+    );
+  } catch (error) {
+    console.error(`[api/products/${id}] failed to fetch product`, error);
+    return NextResponse.json(
+      { error: 'Unable to fetch product at this time.' },
+      { status: 500 }
+    );
+  }
 }

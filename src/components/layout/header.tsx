@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { CartDrawer } from '@/components/cart/cart-drawer';
-import { useCartStore } from '@/store/cart';
+import { cartSelectors, selectCartItemCount } from '@/store/cart';
 import { useUserStore } from '@/store/user';
 import { useRouter } from 'next/navigation';
 import { debounce } from '@/lib/utils';
@@ -34,16 +34,16 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [cartOpen, setCartOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const itemCount = useCartStore((state) => state.itemCount());
+  const itemCount = cartSelectors.use(selectCartItemCount);
   const { user, isAuthenticated } = useUserStore();
   const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       setIsScrolled(currentScrollY > 0);
-      
+
       // Show banner when scrolling up, hide when scrolling down
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
         // Scrolling down
@@ -52,10 +52,10 @@ export function Header() {
         // Scrolling up
         setShowBanner(true);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
@@ -75,13 +75,13 @@ export function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all ${
+        className={`sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur transition-all supports-[backdrop-filter]:bg-background/60 ${
           isScrolled ? 'shadow-sm' : ''
         }`}
       >
         {/* Top Banner - Hidden on mobile, slides in/out on scroll */}
-        <div 
-          className={`hidden bg-primary py-2 text-center text-xs sm:block sm:text-sm text-primary-foreground transition-all duration-300 overflow-hidden ${
+        <div
+          className={`hidden overflow-hidden bg-primary py-2 text-center text-xs text-primary-foreground transition-all duration-300 sm:block sm:text-sm ${
             showBanner ? 'max-h-10 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
@@ -93,22 +93,27 @@ export function Header() {
 
         {/* Main Header */}
         <div className="container mx-auto px-3 sm:px-4">
-          <div className={`flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 ${
-            showBanner ? 'h-14 sm:h-16' : 'h-12 sm:h-14'
-          }`}>
+          <div
+            className={`flex items-center justify-between gap-2 transition-all duration-300 sm:gap-4 ${
+              showBanner ? 'h-14 sm:h-16' : 'h-12 sm:h-14'
+            }`}
+          >
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+            <Link
+              href="/"
+              className="flex flex-shrink-0 items-center space-x-1.5 sm:space-x-2"
+            >
               <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
-              <span className="text-lg sm:text-xl font-bold">ShopHub</span>
+              <span className="text-lg font-bold sm:text-xl">ShopHub</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden items-center space-x-4 lg:space-x-6 md:flex">
+            <nav className="hidden items-center space-x-4 md:flex lg:space-x-6">
               {categories.map((category) => (
                 <Link
                   key={category.slug}
                   href={`/category/${category.slug}`}
-                  className="text-sm font-medium transition-colors hover:text-primary whitespace-nowrap"
+                  className="whitespace-nowrap text-sm font-medium transition-colors hover:text-primary"
                 >
                   {category.name}
                 </Link>
@@ -116,7 +121,7 @@ export function Header() {
             </nav>
 
             {/* Search Bar - Desktop only */}
-            <div className="hidden flex-1 max-w-md lg:block">
+            <div className="hidden max-w-md flex-1 lg:block">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
@@ -133,7 +138,12 @@ export function Header() {
             {/* Actions */}
             <div className="flex items-center gap-1 sm:gap-2">
               <ThemeToggle />
-              <Button variant="ghost" size="icon" className="h-9 w-9 sm:h-10 sm:w-10" asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 sm:h-10 sm:w-10"
+                asChild
+              >
                 <Link href="/wishlist" aria-label="Wishlist">
                   <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
@@ -147,13 +157,21 @@ export function Header() {
               >
                 <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                 {itemCount > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 sm:-right-1 sm:-top-1 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-primary text-[10px] sm:text-xs text-primary-foreground font-medium">
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground sm:-right-1 sm:-top-1 sm:h-5 sm:w-5 sm:text-xs">
                     {itemCount > 9 ? '9+' : itemCount}
                   </span>
                 )}
               </Button>
-              <Button variant="ghost" size="icon" className="hidden h-10 w-10 md:flex" asChild>
-                <Link href={isAuthenticated ? '/account' : '/auth/login'} aria-label="Account">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hidden h-10 w-10 md:flex"
+                asChild
+              >
+                <Link
+                  href={isAuthenticated ? '/account' : '/auth/login'}
+                  aria-label="Account"
+                >
                   <User className="h-5 w-5" />
                 </Link>
               </Button>
@@ -192,7 +210,7 @@ export function Header() {
                   <Link
                     key={category.slug}
                     href={`/category/${category.slug}`}
-                    className="text-sm font-medium transition-colors hover:text-primary py-1 active:bg-accent rounded"
+                    className="rounded py-1 text-sm font-medium transition-colors hover:text-primary active:bg-accent"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {category.name}
@@ -200,10 +218,10 @@ export function Header() {
                 ))}
                 <Link
                   href={isAuthenticated ? '/account' : '/auth/login'}
-                  className="text-sm font-medium transition-colors hover:text-primary py-1 active:bg-accent rounded"
+                  className="rounded py-1 text-sm font-medium transition-colors hover:text-primary active:bg-accent"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  {isAuthenticated ? (user?.name || 'Account') : 'Login'}
+                  {isAuthenticated ? user?.name || 'Account' : 'Login'}
                 </Link>
               </div>
             </nav>

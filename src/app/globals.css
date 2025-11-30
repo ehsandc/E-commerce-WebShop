@@ -1,3 +1,5 @@
+@import '../styles/tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -54,11 +56,98 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    background-image: var(--token-surface-hero);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary-foreground));
   }
 }
 
 @layer utilities {
+  .section-shell {
+    @apply relative py-12 sm:py-16 md:py-20;
+  }
+
+  /* Compact variant for hero to reduce excessive vertical height */
+  .section-shell-hero {
+    @apply relative py-5 sm:py-8 md:py-10;
+  }
+
+  .hero-pattern::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        circle at 20% 30%,
+        hsl(var(--primary) / 0.08),
+        transparent 60%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        hsl(var(--primary) / 0.06),
+        transparent 55%
+      ),
+      linear-gradient(
+        140deg,
+        hsl(var(--background)) 0%,
+        hsl(var(--background)) 40%,
+        hsl(var(--background)) 70%,
+        hsl(var(--background)) 100%
+      );
+    mask: linear-gradient(
+      to bottom,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+    opacity: 0.9;
+  }
+
+  .hero-mosaic img {
+    filter: saturate(1.05) contrast(1.05);
+  }
+
+  .horizontal-scroll {
+    @apply -mx-1 flex w-full overflow-x-auto px-1;
+    scroll-snap-type: x mandatory;
+  }
+  .horizontal-scroll > * {
+    scroll-snap-align: start;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hero-surface {
+    background-image: var(--token-surface-hero);
+  }
+
+  .glass-panel {
+    background-color: var(--token-surface-glass);
+    border: 1px solid var(--token-surface-glass-border);
+    box-shadow: var(--token-shadow-soft);
+    backdrop-filter: blur(16px);
+  }
+
+  .dark .glass-panel {
+    box-shadow: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
   .animate-shimmer {
     animation: shimmer 2s infinite;
     background: linear-gradient(
@@ -77,5 +166,20 @@
     100% {
       background-position: 200% 0;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

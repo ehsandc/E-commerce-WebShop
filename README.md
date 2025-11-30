@@ -10,6 +10,7 @@ A professional, production-ready e-commerce demo built with Next.js 15, TypeScri
 ## ✨ Features
 
 ### 🛍️ Core E-Commerce Functionality
+
 - **Product Catalog**: Browse 18+ products across 5 categories (Electronics, Fashion, Home, Beauty, Toys)
 - **Advanced Filtering**: Filter by price range, rating, brand, stock availability
 - **Smart Search**: Real-time search with debouncing
@@ -19,25 +20,31 @@ A professional, production-ready e-commerce demo built with Next.js 15, TypeScri
 - **Checkout Flow**: Multi-step checkout with form validation (Zod + React Hook Form)
 
 ### 🎨 User Experience
+
 - **Responsive Design**: Mobile-first, works perfectly on all screen sizes
 - **Dark Mode**: Full dark mode support with system preference detection
 - **Smooth Animations**: Micro-interactions and transitions
 - **Toast Notifications**: User feedback for cart/wishlist actions
 - **Quick View**: Product preview dialog without leaving the page
 - **Skeleton Loaders**: Loading states for better perceived performance
+- **Design Tokens**: Centralized theme variables and motion defaults for consistent polish
 
 ### 🏗️ Technical Features
+
 - **Next.js 15 App Router**: Latest Next.js features with server & client components
 - **TypeScript**: Full type safety throughout the application
 - **Zustand**: Lightweight state management with persistence
+- **Repository Pattern**: Centralised data-access layer (`src/lib/db/products.ts`) ready to swap for a real database
 - **API Routes**: RESTful API endpoints for products and search
 - **SEO Optimized**: Meta tags, Open Graph, sitemap, robots.txt
 - **Accessible**: ARIA labels, keyboard navigation, semantic HTML
 - **Testing**: Vitest + React Testing Library setup with example tests
+- **Automation**: Husky + lint-staged pre-commit hooks and GitHub Actions CI pipeline
 
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+ and npm/yarn/pnpm
 
 ### Installation
@@ -63,10 +70,12 @@ npm run build        # Build for production
 npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run lint:fix     # Fix ESLint errors
+npm run lint-staged  # Run lint-staged against staged files
 npm run format       # Format code with Prettier
 npm run typecheck    # Run TypeScript compiler check
 npm run test         # Run tests with Vitest
 npm run test:ui      # Run tests with UI
+npm run test:run     # Run Vitest in CI mode (no watch)
 ```
 
 ## 📁 Project Structure
@@ -119,6 +128,8 @@ ecommerce-demo/
 ├── tailwind.config.ts         # Tailwind CSS config
 ├── tsconfig.json              # TypeScript config
 ├── vitest.config.ts           # Vitest config
+├── docs/                      # Internal documentation
+│   └── architecture.md        # High-level architecture guide
 └── package.json               # Dependencies & scripts
 ```
 
@@ -147,31 +158,38 @@ ecommerce-demo/
 ## 🛠️ Tech Stack
 
 ### Core
+
 - **Next.js 15** - React framework with App Router
 - **React 18** - UI library
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Utility-first CSS framework
 
 ### UI Components
+
 - **shadcn/ui** - Accessible component library
 - **Radix UI** - Headless UI primitives
 - **Lucide React** - Icon library
 - **next-themes** - Dark mode support
+- **Framer Motion** - Declarative animations & micro-interactions
 
 ### State Management
+
 - **Zustand** - Lightweight state management
 - **Zustand Middleware** - Persistence
 
 ### Forms & Validation
+
 - **React Hook Form** - Form management
 - **Zod** - Schema validation
 - **@hookform/resolvers** - Form validation integration
 
 ### SEO & Meta
+
 - **next-seo** - SEO management
 - **next-sitemap** - Sitemap generation
 
 ### Development
+
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
 - **Vitest** - Unit testing
@@ -180,16 +198,19 @@ ecommerce-demo/
 ## 🎨 Design System
 
 ### Colors
+
 - **Primary**: Blue (#3b82f6) - CTAs, links, accents
 - **Secondary**: Neutral grays - Text, backgrounds
 - **Destructive**: Red - Errors, destructive actions
 - **Success**: Green - Success states
 
 ### Typography
+
 - **Font**: Inter (Google Fonts)
 - **Scale**: Tailwind's default type scale
 
 ### Components
+
 - Consistent border radius (`--radius: 0.5rem`)
 - Smooth transitions (200ms)
 - Hover states with elevation changes
@@ -198,6 +219,10 @@ ecommerce-demo/
 ## 🧪 Testing
 
 Tests are written with Vitest and React Testing Library:
+
+## 🧭 Architecture Docs
+
+See `docs/architecture.md` for an overview of the application layers, repository contracts, and migration guidance for connecting to a production-ready data service.
 
 ```bash
 # Run all tests
@@ -211,6 +236,7 @@ npm run test -- --watch
 ```
 
 Example tests included:
+
 - Cart store operations (add, remove, update, calculate)
 - Product card rendering and interactions
 
@@ -233,6 +259,7 @@ npm run start
 ```
 
 Set environment variables:
+
 - `NEXT_PUBLIC_API_URL` - API base URL (defaults to `http://localhost:3000`)
 
 ## 🔒 Environment Variables
@@ -242,11 +269,27 @@ Create a `.env.local` file:
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3000
 SITE_URL=https://your-domain.com
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 ```
+
+## 📊 Analytics
+
+Basic analytics instrumentation is included via `src/lib/analytics.ts` and an `AnalyticsProvider` component that fires `page_view` events on route changes. Cart actions emit domain-specific events (`add_to_cart`, `remove_from_cart`, `update_cart_qty`).
+
+To enable Google Analytics 4:
+
+1. Create a GA4 property and obtain a Measurement ID (format `G-XXXXXXXXXX`).
+2. Add `NEXT_PUBLIC_GA_ID` to `.env.local`.
+3. Restart the dev server.
+
+When `NEXT_PUBLIC_GA_ID` is set, GA script tags are injected in `layout.tsx` and events are forwarded to `gtag`. In development (without an ID) events are logged to the console for inspection.
+
+Extend tracking by calling `track('event_name', { param: 'value' })` or using helpers in `analytics` (e.g. `analytics.search(query, results)`).
 
 ## 🤝 Contributing
 
 This is a demo project, but feel free to:
+
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes

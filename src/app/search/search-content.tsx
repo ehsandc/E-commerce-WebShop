@@ -2,6 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { analytics } from '@/lib/analytics';
 import { Search as SearchIcon } from 'lucide-react';
 import { ProductCard } from '@/components/products/product-card';
 import { ProductGridSkeleton } from '@/components/products/product-skeleton';
@@ -25,6 +26,7 @@ export default function SearchPageContent() {
       const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
       const data = await res.json();
       setProducts(data);
+      analytics.search(query, data.length);
       setLoading(false);
     }
 
@@ -64,7 +66,8 @@ export default function SearchPageContent() {
       ) : (
         <>
           <p className="mb-6 text-sm text-muted-foreground">
-            Found {products.length} {products.length === 1 ? 'product' : 'products'}
+            Found {products.length}{' '}
+            {products.length === 1 ? 'product' : 'products'}
           </p>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (

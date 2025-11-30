@@ -1,97 +1,48 @@
 import { NextRequest, NextResponse } from 'next/server';
-import productsData from '@/../../data/products.json';
-import type { Product, FilterOptions, SortOption } from '@/types';
+import { getProducts } from '@/lib/db/products';
+import type { SortOption } from '@/types';
 
-const products = productsData as Product[];
+const responseCacheHeaders = {
+  'Cache-Control':
+    'public, max-age=60, s-maxage=120, stale-while-revalidate=300',
+};
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 
-  const category = searchParams.get('category');
-  const minPrice = searchParams.get('minPrice');
-  const maxPrice = searchParams.get('maxPrice');
-  const brands = searchParams.get('brands')?.split(',');
-  const rating = searchParams.get('rating');
-  const inStock = searchParams.get('inStock');
-  const sort = searchParams.get('sort') as SortOption | null;
+  const sortParam = searchParams.get('sort');
+  const sort = (sortParam as SortOption) ?? undefined;
+
   const limit = searchParams.get('limit');
-  const featured = searchParams.get('featured');
-  const isNew = searchParams.get('new');
 
-  let filtered = [...products];
-
-  // Apply filters
-  if (category) {
-    filtered = filtered.filter((p) => p.category === category);
-  }
-
-  if (minPrice) {
-    filtered = filtered.filter((p) => {
-      const price = p.salePrice || p.price;
-      return price >= parseFloat(minPrice);
+  try {
+    const products = await getProducts({
+      category: searchParams.get('category') ?? undefined,
+      minPrice: searchParams.get('minPrice')
+        ? Number(searchParams.get('minPrice'))
+        : undefined,
+      maxPrice: searchParams.get('maxPrice')
+        ? Number(searchParams.get('maxPrice'))
+        : undefined,
+      brands: searchParams.get('brands')?.split(',').filter(Boolean),
+      rating: searchParams.get('rating')
+        ? Number(searchParams.get('rating'))
+        : undefined,
+      inStock: searchParams.get('inStock') === 'true',
+      featured: searchParams.get('featured') === 'true',
+      isNew: searchParams.get('new') === 'true',
+      sort,
+      limit: limit ? Number(limit) : undefined,
     });
-  }
 
-  if (maxPrice) {
-    filtered = filtered.filter((p) => {
-      const price = p.salePrice || p.price;
-      return price <= parseFloat(maxPrice);
+    return NextResponse.json(products, {
+      headers: responseCacheHeaders,
     });
+  } catch (error) {
+    console.error('[api/products] failed to fetch products', error);
+    return NextResponse.json(
+      { error: 'Unable to fetch products at this time.' },
+      { status: 500 }
+    );
   }
-
-  if (brands && brands.length > 0) {
-    filtered = filtered.filter((p) => brands.includes(p.brand));
-  }
-
-  if (rating) {
-    filtered = filtered.filter((p) => p.rating >= parseFloat(rating));
-  }
-
-  if (inStock === 'true') {
-    filtered = filtered.filter((p) => p.stock > 0);
-  }
-
-  if (featured === 'true') {
-    filtered = filtered.filter((p) => p.isFeatured);
-  }
-
-  if (isNew === 'true') {
-    filtered = filtered.filter((p) => p.isNew);
-  }
-
-  // Apply sorting
-  if (sort) {
-    switch (sort) {
-      case 'price_asc':
-        filtered.sort((a, b) => {
-          const priceA = a.salePrice || a.price;
-          const priceB = b.salePrice || b.price;
-          return priceA - priceB;
-        });
-        break;
-      case 'price_desc':
-        filtered.sort((a, b) => {
-          const priceA = a.salePrice || a.price;
-          const priceB = b.salePrice || b.price;
-          return priceB - priceA;
-        });
-        break;
-      case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'newest':
-        filtered.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
-        break;
-      case 'popularity':
-        filtered.sort((a, b) => b.reviewCount - a.reviewCount);
-        break;
-    }
-  }
-
-  // Apply limit
-  if (limit) {
-    filtered = filtered.slice(0, parseInt(limit));
-  }
-
-  return NextResponse.json(filtered);
 }

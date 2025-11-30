@@ -1,26 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-import productsData from '@/../../data/products.json';
-import type { Product } from '@/types';
+import { searchProducts } from '@/lib/db/products';
 
-const products = productsData as Product[];
+const responseCacheHeaders = {
+  'Cache-Control':
+    'public, max-age=30, s-maxage=60, stale-while-revalidate=120',
+};
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get('q')?.toLowerCase() || '';
+  const query = searchParams.get('q')?.trim() ?? '';
 
   if (!query) {
-    return NextResponse.json([]);
+    return NextResponse.json([], { headers: responseCacheHeaders });
   }
 
-  const results = products.filter((product) => {
-    return (
-      product.title.toLowerCase().includes(query) ||
-      product.description.toLowerCase().includes(query) ||
-      product.brand.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query) ||
-      product.tags.some((tag) => tag.toLowerCase().includes(query))
-    );
-  });
+  try {
+    const results = await searchProducts(query);
 
-  return NextResponse.json(results);
+    return NextResponse.json(results, { headers: responseCacheHeaders });
+  } catch (error) {
+    console.error('[api/search] failed to execute search', error);
+    return NextResponse.json(
+      { error: 'Unable to perform search at this time.' },
+      { status: 500 }
+    );
+  }
 }

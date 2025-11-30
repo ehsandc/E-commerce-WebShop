@@ -1,0 +1,5 @@
+#!/bin/sh
+
+npm run lint-staged || exit 1
+npm run typecheck || exit 1
+npm run test:run -- --passWithNoTests || exit 1

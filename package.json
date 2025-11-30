@@ -10,9 +10,12 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "typecheck": "tsc --noEmit",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "postbuild": "next-sitemap"
+    "test": "node ./node_modules/vitest/vitest.mjs",
+    "test:ui": "node ./node_modules/vitest/vitest.mjs --ui",
+    "lint-staged": "lint-staged",
+    "test:run": "node ./node_modules/vitest/vitest.mjs --run",
+    "postbuild": "next-sitemap",
+    "prepare": "husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -26,6 +29,7 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "framer-motion": "^11.0.24",
     "lucide-react": "^0.303.0",
     "next": "^15.0.3",
     "next-seo": "^6.6.0",
@@ -52,6 +56,8 @@
     "eslint": "^8.56.0",
     "eslint-config-next": "^15.0.3",
     "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.0",
     "jsdom": "^23.2.0",
     "postcss": "^8.4.33",
     "prettier": "^3.1.1",
@@ -59,5 +65,9 @@
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3",
     "vitest": "^1.1.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": "eslint --max-warnings=0 --fix",
+    "*.{ts,tsx,js,jsx,json,css,md}": "prettier --write"
   }
 }
