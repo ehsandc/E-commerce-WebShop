@@ -12,6 +12,8 @@ const nextConfig = {
       },
     ],
   },
+  // Suppress workspace root warning about multiple lockfiles
+  outputFileTracingRoot: __dirname,
 };
 
 module.exports = nextConfig;
