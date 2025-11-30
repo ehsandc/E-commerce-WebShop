@@ -121,195 +121,90 @@ export function HomePageContent({
         initial="hidden"
         animate="visible"
         variants={fadeInUp}
-        className="section-shell-hero hero-pattern relative overflow-hidden"
+        className="relative overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 py-12 sm:py-16 md:py-20"
       >
-        <div
-          className="hero-surface absolute inset-0 -z-10"
-          aria-hidden="true"
-        />
-        <div className="container mx-auto grid gap-8 px-4 md:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] md:items-center md:gap-12">
-          <motion.div
-            className="space-y-5"
-            variants={staggerChildren}
-            initial="hidden"
-            animate="visible"
-          >
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl text-center">
             <motion.span
-              className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary backdrop-blur"
+              className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary"
               variants={fadeIn}
             >
-              <Zap className="h-3.5 w-3.5" />
-              New drops every Friday
+              <Zap className="h-4 w-4" />
+              New arrivals every week
             </motion.span>
 
             <motion.h1
-              className="text-balance text-[2.4rem] font-bold leading-[1.05] tracking-tight sm:text-[2.9rem] lg:text-[3.4rem]"
+              className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
               variants={fadeInUp}
             >
-              Discover what makes shopping
-              <br className="hidden sm:block" />
-              <span className="relative inline-block">
-                <span className="bg-gradient-to-r from-primary via-primary/70 to-primary/50 bg-clip-text text-transparent">
-                  remarkable
-                </span>
-                <span
-                  className="absolute -inset-x-1 -bottom-1 h-[10px] rounded bg-primary/15 blur-sm"
-                  aria-hidden="true"
-                />
-              </span>
+              Discover Amazing Products
+              <br />
+              <span className="text-primary">For Every Lifestyle</span>
             </motion.h1>
 
             <motion.p
-              className="max-w-xl text-balance text-sm leading-relaxed text-muted-foreground sm:text-base"
+              className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground"
               variants={fadeInUp}
             >
-              Curated collections, limited-time exclusives & concierge support
-              for modern shoppers. Free shipping over $50 and carbon-neutral
-              delivery on every order.
+              Shop our curated collection of electronics, fashion, home goods,
+              and more. Free shipping on orders over $50.
             </motion.p>
 
             <motion.div
-              className="flex flex-col gap-2.5 sm:flex-row"
+              className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
               variants={fadeInUp}
             >
-              <Button size="lg" className="h-11" asChild>
+              <Button size="lg" asChild>
                 <Link href="/category/electronics">
-                  Shop the Collection
+                  Start Shopping
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="h-11" asChild>
-                <Link href="/about">Learn how we curate</Link>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/search">Browse All Products</Link>
               </Button>
             </motion.div>
 
-            {/* Slim benefits bar */}
-            <motion.ul
-              variants={fadeInUp}
-              aria-label="Store benefits"
-              className="horizontal-scroll scrollbar-hide gap-2 pt-1 sm:flex sm:flex-wrap sm:items-center sm:gap-2 sm:pt-1"
-            >
-              {[
-                { label: 'Live concierge 7d', icon: Sparkles },
-                { label: 'Carbon-neutral', icon: Plane },
-                { label: '30d price match', icon: ShieldCheck },
-                { label: 'Flexible payments', icon: BadgeCheck },
-              ].map(({ label, icon: Icon }) => (
-                <li
-                  key={label}
-                  className="inline-flex items-center gap-1 rounded-full border border-primary/10 bg-white/60 px-3 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur dark:bg-slate-900/60"
-                >
-                  <Icon
-                    className="h-3.5 w-3.5 text-primary"
-                    aria-hidden="true"
-                  />
-                  <span>{label}</span>
-                </li>
-              ))}
-            </motion.ul>
-
-            <motion.dl
-              className="grid gap-3 rounded-2xl border border-primary/10 bg-white/60 p-4 text-sm shadow-sm backdrop-blur dark:bg-slate-900/60 sm:grid-cols-3"
-              variants={fadeInUp}
+            <motion.div
+              className="mt-12 grid gap-8 sm:grid-cols-3"
+              variants={staggerChildren}
             >
               {[
                 {
-                  label: 'Verified brands',
-                  value: '80+',
-                  icon: BadgeCheck,
-                },
-                {
-                  label: 'Avg. delivery time',
-                  value: '2.5 days',
-                  icon: Plane,
-                },
-                {
-                  label: 'Customer satisfaction',
-                  value: '4.9/5',
                   icon: ShieldCheck,
+                  title: 'Secure Checkout',
+                  description: 'Safe & encrypted',
                 },
-              ].map(({ label, value, icon: Icon }) => (
-                <motion.div
-                  key={label}
-                  className="flex items-center gap-2.5"
-                  variants={fadeInUp}
-                >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-                      {label}
-                    </dt>
-                    <dd className="text-base font-semibold text-foreground">
-                      {value}
-                    </dd>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.dl>
-          </motion.div>
-
-          <motion.div
-            variants={fadeInUp}
-            className="hero-mosaic relative grid grid-cols-2 gap-2 rounded-[var(--token-radius-xl)]"
-            aria-label="Featured preview mosaic"
-          >
-            {(featuredProducts.slice(0, 4).length
-              ? featuredProducts.slice(0, 4)
-              : [
-                  {
-                    id: 'placeholder-1',
-                    name: 'Essentials Pack',
-                    image:
-                      'https://images.unsplash.com/photo-1518081461904-9ac6e800c4f0?w=600',
-                    price: 0,
-                  },
-                  {
-                    id: 'placeholder-2',
-                    name: 'Workspace Upgrade',
-                    image:
-                      'https://images.unsplash.com/photo-1559163499-3b7f166bd3f0?w=600',
-                    price: 0,
-                  },
-                  {
-                    id: 'placeholder-3',
-                    name: 'Comfort Wear',
-                    image:
-                      'https://images.unsplash.com/photo-1520970014086-2208d157c9e2?w=600',
-                    price: 0,
-                  },
-                  {
-                    id: 'placeholder-4',
-                    name: 'Smart Living',
-                    image:
-                      'https://images.unsplash.com/photo-1556909210-778beb1a4338?w=600',
-                    price: 0,
-                  },
-                ]
-            ).map((p, i) => (
-              <div
-                key={p.id}
-                className={`group relative aspect-square overflow-hidden rounded-xl border border-primary/10 bg-white/40 dark:bg-slate-900/40 ${i === 0 ? 'col-span-1 row-span-1' : ''}`}
-              >
-                <Image
-                  src={(p as any).image}
-                  alt={(p as any).name}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
-                  priority={i === 0}
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-black/0 to-black/30 opacity-40 transition group-hover:opacity-50" />
-                <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[11px] font-medium text-white/90">
-                  <span className="max-w-[60%] truncate">
-                    {(p as any).name}
-                  </span>
-                  <ArrowRight className="h-3 w-3" />
-                </div>
-              </div>
-            ))}
-          </motion.div>
+                {
+                  icon: Plane,
+                  title: 'Fast Delivery',
+                  description: '2-3 day shipping',
+                },
+                {
+                  icon: BadgeCheck,
+                  title: 'Quality Guarantee',
+                  description: '30-day returns',
+                },
+              ].map((feature, i) => {
+                const Icon = feature.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    variants={fadeInUp}
+                    className="flex flex-col items-center text-center"
+                  >
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                      <Icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold">{feature.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {feature.description}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
         </div>
       </MotionSection>
 
