@@ -66,3 +66,6 @@ coverage/
 # Optional
 *.pem
 .pnpm-debug.log
+
+# Image source files
+webShop-images/
